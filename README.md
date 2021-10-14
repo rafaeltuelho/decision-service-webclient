@@ -16,6 +16,9 @@ You will also see any lint errors in the console.
 
 ## Generating a Container Image
 
+This needs to be performed in two steps:
+
+### 1. Build the webapp using NodeJS webpack using the utility Nodeshift
 Use the [source-to-image](https://github.com/openshift/source-to-image) CLI tool to easily generate an image containing your react app. 
 
  * `s2i` CLI build usage
@@ -27,15 +30,21 @@ Usage:
  * using the [Nodeshift s2i base image](https://hub.docker.com/r/nodeshift/ubi8-s2i-web-app)
 
 ```
-s2i build . nodeshift/ubi8-s2i-web-app:latest rafaeltuelho/decision-service-webclient
+s2i build . nodeshift/ubi8-s2i-web-app:latest rafaeltuelho/decision-service-s2i-webpack
+```
+
+### 2. Build the final webapp image 
+ * Build the final webapp using the Nginx base image
+```
+docker build -t quay.io/rafaeltuelho/decision-service-webclient .
 ```
 
  * to run this container
 ```
-docker run -d --name decision-service-webclient -p 3000:8080 rafaeltuelho/decision-service-webclient
+docker run -d --name decision-service-webclient -p 8081:8080 quay.io/rafaeltuelho/decision-service-webclient
 ```
 
-  * the UI should be accessible at http://localhost:3000
+  * the UI should be accessible at http://localhost:8081
 
 ## Deploying on Openshift
 
