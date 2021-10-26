@@ -134,7 +134,8 @@ export default class KieClient {
 
     // OpenApi resource on KieServer is a secured resource that requires auth
     const requestInterceptor = request => {
-      if (request.loadSpec) {
+      if (request.loadSpec && !this.settings.common.kogitoRuntime) {
+        console.debug('Not kogito. Adding Auth header to the SwaggerClient request interceptor...');
         request.headers['Authorization'] = 'Basic ' + this.settings.common.kieServerAuthBase64;
       }
     

@@ -30,7 +30,7 @@ export function DMNResultsRenderer( { decisionResults } ) {
                       <DescriptionList>
                       {
                         _.map( r.result, (v, k, o) => {
-                          console.debug('k, v', k, v);
+                          //console.debug('k, v', k, v);
                           return (
                             <DescriptionListGroup>
                               <DescriptionListTerm key={k}>
