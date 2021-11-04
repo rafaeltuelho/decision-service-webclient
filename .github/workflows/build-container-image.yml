@@ -1,19 +1,19 @@
 name: build-push-to-quay.io
 on: [push]
 jobs:
-  webpack:
+  container-image-chain-build-publish:
     runs-on: ubuntu-latest
     env:
       REGISTRY_CONTEXT: quay.io/rafaeltuelho
       WEBPACK_IMAGE_NAME: rafaeltuelho/decision-service-s2i-webpack
-      FINAL_IMAGE_NAME: rafaeltuelho/decision-service-webclient
+      FINAL_IMAGE_NAME: decision-service-webclient
       TAGS: latest
     steps:
-      - name: Checkout src
+      - name: Checkout repo
         uses: actions/checkout@v2
 
       # Setup S2i and Build the nodejs webpack container base image
-      - name: Setup and Build
+      - name: Build ReactJS webpack base image using Nodeshift
         id: build_image
         uses: redhat-actions/s2i-build@v2
         with:
@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.REDHAT_IO_TOKEN }}
 
       # Chain image build using Nginx
-      - name: Build the Docker image
+      - name: Build the final image using Docker chained build
         run: docker build . --file Dockerfile --tag ${{ env.REGISTRY_CONTEXT }}/${{ env.FINAL_IMAGE_NAME }}
 
       - name: Login to Quay.io Container Registry
