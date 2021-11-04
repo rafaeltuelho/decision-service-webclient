@@ -1,7 +1,7 @@
 name: build-push-to-quay.io
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ master ]
 jobs:
   container-image-chain-build-publish:
     runs-on: ubuntu-latest
