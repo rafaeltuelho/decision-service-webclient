@@ -1,7 +1,11 @@
 name: build-push-to-quay.io
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      final_image_tag:
+        description: 'Container Image Tag'
+        required: true
+        default: 'latest'
 jobs:
   container-image-chain-build-publish:
     runs-on: ubuntu-latest
@@ -34,7 +38,7 @@ jobs:
 
       # Chain image build using Nginx
       - name: Build the final image using Docker chained build
-        run: docker build . --file Dockerfile --tag ${{ env.REGISTRY_CONTEXT }}/${{ env.FINAL_IMAGE_NAME }}
+        run: docker build . --file Dockerfile --tag ${{ env.REGISTRY_CONTEXT }}/${{ env.FINAL_IMAGE_NAME }}:${{ github.event.inputs.final_image_tag }}
 
       - name: Login to Quay.io Container Registry
         uses: docker/login-action@v1
@@ -45,4 +49,4 @@ jobs:
 
       # Chain image build using Nginx
       - name: Push final image to Quay.io/rafaeltuelho
-        run: docker push ${{ env.REGISTRY_CONTEXT }}/${{ env.FINAL_IMAGE_NAME }}
+        run: docker push ${{ env.REGISTRY_CONTEXT }}/${{ env.FINAL_IMAGE_NAME }}:${{ github.event.inputs.final_image_tag }}
