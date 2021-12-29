@@ -6,7 +6,7 @@ export const DEMO_SIMPLE_SCHEMA = new SimpleSchema2Bridge(
     Driver: { type: Object, },
     'Driver.name': { type: String, min: 3, required: false},
     'Driver.age': { type: Number, min: 16, required: false},
-    'Driver.claims': { type: SimpleSchema.Integer, min: 0 },
+    'Driver.priorClaims': { type: SimpleSchema.Integer, min: 0 },
     'Driver.locationRiskProfile': { 
       type: String,
       defaultValue: 'Select',
@@ -48,7 +48,7 @@ export const DEMO_SIMPLE_SCHEMA_CODE =
     Driver: { type: Object, },
     'Driver.name': { type: String, min: 3, required: false},
     'Driver.age': { type: Number, min: 16, required: false},
-    'Driver.claims': { type: SimpleSchema.Integer, min: 0 },
+    'Driver.priorClaims': { type: SimpleSchema.Integer, min: 0 },
     'Driver.locationRiskProfile': { 
       type: String,
       defaultValue: 'Select',
