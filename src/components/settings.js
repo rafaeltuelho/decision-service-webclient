@@ -327,7 +327,8 @@ class SettingsForm extends React.Component {
                 <pre>
                 EAP:        'http://host:port/kie-server/services/rest/server'<br/>
                 SpringBoot: 'http://host:port/rest/server'<br/>
-                Kogito:     'http://host:port'
+                Kogito:     'http://host:port' (make sure your <b>cors</b> is enabled in your Quarkus config.)<br/>
+                Openshift   'https://your.cluster.domain/runtime context' (use http<b>s</b>)<br/>
                 </pre>
               </div>
             }
@@ -345,7 +346,7 @@ class SettingsForm extends React.Component {
           </FormGroup>
           <FormGroup
             label="Username"
-            isRequired
+            isRequired={!this.state.common.kogitoRuntime}
             fieldId="common.kieServerUser"
             helperText="Enter the Username for the Kie Server"
             helperTextInvalid="User must not be empty">

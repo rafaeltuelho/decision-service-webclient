@@ -62,10 +62,10 @@ export default class KieClient {
             .then(this.checkKieResponse);
   }
 
-  buildDroolsRequestBody(facts, kieSessionName = null) {
+  buildDroolsRequestBody(facts) {
     // console.debug('kieSessionName: ', kieSessionName);
     const requestBody = {
-      "lookup": kieSessionName,
+      "lookup": this.settings.drools.kieSessionName || null,
       "commands": [
           ...facts,
           {
@@ -73,7 +73,12 @@ export default class KieClient {
                 "max": -1,
                 "out-identifier": "fired rules"                  
               }
-          }
+          }//, // enabling this command will demand a refactoring on the 'DroolsResultsRenderer' component (dmnResultsCardRenderer.js)
+          // { //return all facts (including the one inserted during rules execution)
+          //     "get-objects": {
+          //         "out-identifier": "resultFacts"
+          //     }
+          // }
       ]
     }
 
@@ -103,7 +108,7 @@ export default class KieClient {
     const endpoint =
         this.settings.common.kieServerBaseUrl + '/containers/instances/' + 
         this.settings.drools.containerId;
-    const payload = this.buildDroolsRequestBody(facts, this.settings.drools.kieSessionName);
+    const payload = this.buildDroolsRequestBody(facts);
     return this.callKieServer(endpoint, payload); 
   }
 
