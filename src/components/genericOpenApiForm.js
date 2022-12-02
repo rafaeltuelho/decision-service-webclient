@@ -128,7 +128,7 @@ class GenericDecisionModelForm extends React.Component {
             msg: (err.status ? err.status : err) + '' + (err.response ? ': ' + err.response : ''),
           },
         })
-        
+
         this.scrollToTop();
       })
       .finally(() => {

@@ -22,8 +22,10 @@ import {
   Alert, 
   AlertActionCloseButton,
   Tooltip,
+  Icon,
 } from '@patternfly/react-core';
 import { loadFromLocalStorage } from './util'
+import { ExclamationTriangleIcon } from "@patternfly/react-icons";
 
 class SettingsForm extends React.Component {
   constructor(props) {
@@ -187,7 +189,7 @@ class SettingsForm extends React.Component {
           _alert: {
             visible: true,
             variant: 'success',
-            msg: response?.type || ' Success!',
+            msg: response?.type || ' Success! Click on Save.',
           },
         });
       })
@@ -322,14 +324,14 @@ class SettingsForm extends React.Component {
             helperTextInvalid="URL must not be empty. Enter host and port.">
             <Tooltip content={
               <div>
-                Make sure your backend server has CORS enabled!<br/>
                 <strong>Examples:</strong>
                 <pre>
                 EAP:        'http://host:port/kie-server/services/rest/server'<br/>
                 SpringBoot: 'http://host:port/rest/server'<br/>
-                Kogito:     'http://host:port' (make sure your <b>cors</b> is enabled in your Quarkus config.)<br/>
+                Kogito:     'http://host:port'<br/>
                 Openshift   'https://your.cluster.domain/runtime context' (use http<b>s</b>)<br/>
                 </pre>
+                Make sure your backend service has <b>CORS</b> enabled!<br/>
               </div>
             }
             enableFlip={true}

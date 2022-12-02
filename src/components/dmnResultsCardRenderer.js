@@ -11,8 +11,11 @@ import {
   DescriptionListTerm,
   DescriptionListDescription,
   Gallery,
-  GalleryItem, 
+  GalleryItem,
+  Divider, 
 } from '@patternfly/react-core';
+
+
 
 export function DMNResultsRenderer( { decisionResults } ) {
   // console.debug(decisionResults);
@@ -31,16 +34,7 @@ export function DMNResultsRenderer( { decisionResults } ) {
                       {
                         _.map( r.result, (v, k, o) => {
                           //console.debug('k, v', k, v);
-                          return (
-                            <DescriptionListGroup>
-                              <DescriptionListTerm key={k}>
-                                {k}
-                              </DescriptionListTerm>
-                              <DescriptionListDescription>
-                                {stringifyValue(v)}
-                              </DescriptionListDescription>
-                            </DescriptionListGroup>
-                          );
+                          return (<RenderInnerBody innerObj={v} />);
                         })                      
                       }
                       </DescriptionList>
@@ -156,11 +150,12 @@ function RenderInnerBody( { innerObj } ) {
               <DescriptionListDescription>
                 {stringifyValue(v)}
               </DescriptionListDescription>
-            </DescriptionListGroup>    
+            </DescriptionListGroup>
           );
         }
       })
     }
+    <Divider />
     </>
   )
 }
